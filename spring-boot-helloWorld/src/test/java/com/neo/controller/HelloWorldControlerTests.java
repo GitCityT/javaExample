@@ -1,7 +1,6 @@
 package com.neo.controller;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -25,7 +24,13 @@ public class HelloWorldControlerTests {
     @Before// 在@Test前执行的内容
     public void setUp() throws Exception {
         //构建控制器
+        System.out.println("在任意使用@Test注解标注的public void方法执行之前执行");
         mvc = MockMvcBuilders.standaloneSetup(new HelloWorldController()).build();
+    }
+
+    @BeforeClass
+    public static void runBeforeClass(){
+        System.out.println("表示在类中的任意public static void方法执行之前执行,比@Before早");
     }
 
     @Test
@@ -48,4 +53,14 @@ public class HelloWorldControlerTests {
                 .andReturn();
     }
 
+
+    @After
+    public void runAfter() throws Exception {
+        System.out.println("在任意使用@Test注解标注的public void方法执行之后执行");
+    }
+
+    @AfterClass
+    public static void runAfterClass(){
+        System.out.println("表示在类中的任意public static void方法执行之后执行,比@After晚");
+    }
 }
